@@ -5,10 +5,6 @@ services:
     build: .
     container_name: ufolep-app
     restart: unless-stopped
-    env_file:
-      - .env
-    environment:
-      - DB_DIR=/data
     volumes:
       - ufolep-db:/data
       - ufolep-uploads:/app/public/images/uploads
