@@ -16,8 +16,6 @@ services:
       start_period: 10s
     networks:
       - ufolep-net
-    ports:
-      - "${APP_PORT:-3000}:3000"
 
   nginx:
     image: nginx:alpine
