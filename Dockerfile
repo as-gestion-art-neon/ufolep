@@ -1,8 +1,7 @@
-FROM node:18-bookworm
+FROM node:22-bookworm
 WORKDIR /app
 COPY package*.json ./
-RUN npm install --production --build-from-source && \
-    npm cache clean --force
+RUN npm ci --production
 COPY . .
 RUN mkdir -p /app/data && chown -R node:node /app
 USER node
