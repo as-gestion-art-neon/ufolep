@@ -5,6 +5,7 @@ const path = require('path');
 
 const authRoutes = require('./routes/auth');
 const uploadRoutes = require('./routes/uploads');
+const newsRoutes = require('./routes/news');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,6 +23,7 @@ app.use(session({
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/api/auth', authRoutes);
 app.use('/api/uploads', uploadRoutes);
+app.use('/api/news', newsRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', uptime: process.uptime() });
