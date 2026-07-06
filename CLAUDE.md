@@ -40,10 +40,10 @@ No framework, no build step. `index.html` is the shell (nav + footer); `js/main.
 
 `docker-compose.yml` runs two services on an internal network:
 
-- `app` — the Node server (root `Dockerfile`), not exposed directly.
-- `nginx` (`nginx/`) — the only exposed service (`HTTP_PORT`, default 8042). It serves `/images/uploads/` and `/pdf/` directly from named volumes and proxies everything else to `app:3000`.
+- `app` — the Node server (root `Dockerfile`), not exposed directly. Serves everything from `public/`: the site, uploaded images and PDFs (`public/pdf/`).
+- `nginx` (`nginx/`) — the only exposed service (`HTTP_PORT`, default 8042), a pure reverse proxy to `app:3000`.
 
-Named volumes: `ufolep-uploads` is shared between `app` (write path `/app/public/images/uploads`) and `nginx` (read path `/data/images/uploads`); `ufolep-pdf` is nginx-only (PDFs must be placed in the volume manually); `ufolep-db` is mounted at `/data` in `app` — note the DB only lands there if `DB_DIR=/data` is set, otherwise it goes to `src/db/` inside the container and is not persisted.
+**No persistent storage** (deliberate choice): there are no volumes. The SQLite DB, uploaded images and news live inside the `app` container and are lost when the container is rebuilt or recreated. Content baked into the image at build time (`public/`, including `public/pdf/`) survives rebuilds.
 
 ## Assets and reference docs
 
