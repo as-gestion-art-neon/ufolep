@@ -2,6 +2,14 @@
 
 const API = '/api';
 
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 function isLoggedIn() {
   return window.__loggedIn === true;
 }
@@ -80,6 +88,12 @@ async function handleRoute() {
 
 // ===== HOME PAGE =====
 async function renderHome(el) {
+  let news = [];
+  try {
+    const res = await fetch(API + '/news');
+    news = await res.json();
+  } catch(e) {}
+
   const sports = [
     { slug: 'vtt', name: 'VTT' },
     { slug: 'cyclosport', name: 'Cyclosport' },
@@ -102,6 +116,15 @@ async function renderHome(el) {
       <p>Faire du sport, c'est comme la famille : on s'implique pour le meilleur et pour le pire… mais on reste !</p>
     </section>
 
+    <section class="featured-kmoove">
+      <div class="featured-badge">★ À la une</div>
+      <div class="featured-content">
+        <h2>Kmoove — Le mur interactif</h2>
+        <p>Un mur connecté qui transforme le sport en jeu : cibles lumineuses, scores en direct et défis pour tous les âges. Venez tester ce concept unique !</p>
+        <a href="/sport/kmoove" class="page-link btn btn-featured" data-href="/sport/kmoove">Découvrir le Kmoove</a>
+      </div>
+    </section>
+
     <h2 class="sports-section-title">Nos Sports</h2>
     <div class="sports-grid">
   `;
@@ -116,7 +139,22 @@ async function renderHome(el) {
 
   html += `
     </div>
+  `;
 
+  if (news.length > 0) {
+    html += `<h2 class="sports-section-title">Actualités</h2><div class="news-list-public">`;
+    for (const n of news) {
+      html += `
+        <article class="news-card">
+          <div class="news-date">${new Date(n.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
+          <h3>${escapeHtml(n.title)}</h3>
+          <p>${escapeHtml(n.content).replace(/\n/g, '<br>')}</p>
+        </article>`;
+    }
+    html += `</div>`;
+  }
+
+  html += `
     <section class="content-section">
       <h2>L'UFOLEP, c'est quoi ?</h2>
       <p>L'UFOLEP (Union Française d'Œuvres Laïques d'Éducation Physique) est un mouvement sportif associatif qui promeut la pratique sportive pour tous, dans un esprit de convivialité, d'éducation et de solidarité.</p>
@@ -325,6 +363,27 @@ async function renderAdmin(el) {
     imagesList = '<li>Impossible de charger les images</li>';
   }
 
+  let newsList = '<li>Aucune actualité</li>';
+  try {
+    const res = await fetch(API + '/news');
+    const news = await res.json();
+    if (news.length > 0) {
+      newsList = '';
+      for (const n of news) {
+        newsList += `
+          <li>
+            <div class="img-info">
+              <div class="filename">${escapeHtml(n.title)}</div>
+              <div class="meta">${new Date(n.created_at).toLocaleDateString('fr-FR')}</div>
+            </div>
+            <button class="btn btn-danger delete-news" data-id="${n.id}">Supprimer</button>
+          </li>`;
+      }
+    }
+  } catch(e) {
+    newsList = '<li>Impossible de charger les actualités</li>';
+  }
+
   let contactsList = '<li>Aucun message</li>';
 
   el.innerHTML = `
@@ -334,6 +393,7 @@ async function renderAdmin(el) {
         <form class="upload-form" id="uploadForm" enctype="multipart/form-data">
           <select name="sport" id="uploadSport" required>
             <option value="">-- Sport --</option>
+            <option value="kmoove">Kmoove</option>
             <option value="vtt">VTT</option>
             <option value="cyclosport">Cyclosport</option>
             <option value="cyclo-cross">Cyclo-cross</option>
@@ -356,6 +416,23 @@ async function renderAdmin(el) {
       </div>
 
       <div class="admin-section">
+        <h2>Publier une actualité</h2>
+        <form class="upload-form" id="newsForm">
+          <input type="text" name="title" id="newsTitle" placeholder="Titre de l'actualité" required>
+          <textarea name="content" id="newsContent" placeholder="Contenu de l'actualité" rows="5" required></textarea>
+          <button type="submit" class="btn btn-primary">Publier</button>
+          <div class="form-message" id="newsMsg"></div>
+        </form>
+      </div>
+
+      <div class="admin-section">
+        <h2>Actualités publiées</h2>
+        <ul class="image-list" id="newsList">
+          ${newsList}
+        </ul>
+      </div>
+
+      <div class="admin-section">
         <h2>Modifier le mot de passe</h2>
         <form class="upload-form" id="passwordForm">
           <input type="password" name="currentPassword" id="curPw" placeholder="Mot de passe actuel" required>
@@ -366,7 +443,7 @@ async function renderAdmin(el) {
       </div>
 
       <div class="admin-section">
-        <h2>Images importées (${imagesList.includes('Impossible') ? '' : 'Gérer')}</h2>
+        <h2>Images importées</h2>
         <ul class="image-list" id="imageList">
           ${imagesList}
         </ul>
@@ -404,6 +481,46 @@ async function renderAdmin(el) {
       msgEl.className = 'form-message error';
       msgEl.textContent = 'Erreur de connexion';
     }
+  });
+
+  // News publish handler
+  document.getElementById('newsForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msgEl = document.getElementById('newsMsg');
+    try {
+      const res = await fetch(API + '/news', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: document.getElementById('newsTitle').value,
+          content: document.getElementById('newsContent').value,
+        }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        msgEl.className = 'form-message success';
+        msgEl.textContent = 'Actualité publiée !';
+        e.target.reset();
+        setTimeout(() => renderAdmin(el), 1000);
+      } else {
+        msgEl.className = 'form-message error';
+        msgEl.textContent = data.error || 'Erreur';
+      }
+    } catch(err) {
+      msgEl.className = 'form-message error';
+      msgEl.textContent = 'Erreur de connexion';
+    }
+  });
+
+  // News delete handler
+  document.getElementById('newsList').addEventListener('click', async (e) => {
+    const btn = e.target.closest('.delete-news');
+    if (!btn) return;
+    if (!confirm('Supprimer cette actualité ?')) return;
+    try {
+      await fetch(API + '/news/' + btn.dataset.id, { method: 'DELETE' });
+      renderAdmin(el);
+    } catch(err) {}
   });
 
   // Delete handler

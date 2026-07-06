@@ -1,6 +1,18 @@
 // Sport content data - loaded before main.js
 
 const SPORTS_DATA = {
+  'kmoove': {
+    name: 'Kmoove',
+    imageKey: 'kmoove',
+    content: `
+      <div class="sport-body-text">
+        <h2>Kmoove — Le mur interactif</h2>
+        <p>Le Kmoove est un mur interactif nouvelle génération : une surface de jeu connectée qui réagit en temps réel aux ballons et aux touchers. Cibles lumineuses, scores affichés en direct, défis chronométrés… l'activité physique devient un véritable jeu vidéo grandeur nature !</p>
+        <p>Accessible dès le plus jeune âge et jusqu'aux seniors, le Kmoove permet de travailler la précision, les réflexes, la coordination et l'endurance tout en s'amusant. En solo, en duo ou en équipe, chacun trouve un défi à sa mesure.</p>
+        <p>Venez le découvrir et défier vos amis dans notre salle : fous rires et dépassement de soi garantis !</p>
+      </div>
+    `,
+  },
   'vtt': {
     name: 'VTT',
     imageKey: 'vtt',
@@ -37,7 +49,7 @@ const SPORTS_DATA = {
   'tir-a-l-arc': {
     name: 'Tir à l\'arc',
     imageKey: 'tir-a-l-arc',
-    pdf: '/pdf/TIR A L'ARC.pdf',
+    pdf: '/pdf/TIR A L\'ARC.pdf',
     content: `
       <div class="sport-body-text">
         <h2>Tir à l'arc</h2>
