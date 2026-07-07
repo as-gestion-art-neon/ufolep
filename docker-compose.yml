@@ -1,35 +1,83 @@
-version: "3.8"
+version: "3.9"
+
+# ============================================================
+#  UFOLEP 86 – Stack Portainer
+#  2 services : frontend (Nginx statique) + api (Node/Express/SQLite)
+#  Déploiement : Portainer > Stacks > Repository (GitHub)
+#  Compose path : docker-compose.yml
+# ============================================================
 
 services:
-  app:
-    build: .
-    container_name: ufolep-app
+
+  # ---------------------------------------------------------
+  #  FRONTEND — Site statique + proxy vers l'API
+  # ---------------------------------------------------------
+  ufolep86-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ufolep86-web:latest
+    container_name: ufolep86-web
     restart: unless-stopped
-    environment:
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:?définir ADMIN_PASSWORD dans les variables du stack}
-      - SESSION_SECRET=${SESSION_SECRET:?définir SESSION_SECRET dans les variables du stack}
+
+    ports:
+      - "${PORT:-9430}:80"
+
+    depends_on:
+      - ufolep86-api
+
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      test: ["CMD", "wget", "-qO-", "http://localhost/"]
       interval: 30s
       timeout: 5s
       retries: 3
       start_period: 10s
-    networks:
-      - ufolep-net
 
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    container_name: ufolep-nginx
-    restart: unless-stopped
-    ports:
-      - "${HTTP_PORT:-8042}:80"
-    depends_on:
-      - app
     networks:
-      - ufolep-net
+      - ufolep86-net
+
+  # ---------------------------------------------------------
+  #  API — Node.js / Express / SQLite (actualités + galerie)
+  # ---------------------------------------------------------
+  ufolep86-api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: ufolep86-api:latest
+    container_name: ufolep86-api
+    restart: unless-stopped
+
+    environment:
+      API_PORT: 4000
+      ADMIN_USER: ${ADMIN_USER:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-changez-ce-mot-de-passe}
+      JWT_SECRET: ${JWT_SECRET:-changez-ce-secret-en-production}
+
+    volumes:
+      # Persistance de la base SQLite (actualités, galerie, compte admin)
+      - ufolep86-data:/app/data
+      # Persistance des images uploadées (actualités + galerie + miniatures)
+      - ufolep86-uploads:/app/uploads
+
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:4000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+    networks:
+      - ufolep86-net
+
+    # Pas de port exposé publiquement : uniquement accessible via
+    # le proxy Nginx du frontend (réseau interne ufolep86-net)
 
 networks:
-  ufolep-net:
-    driver: bridge
+  ufolep86-net:
+    name: ufolep86-network
+
+volumes:
+  ufolep86-data:
+    name: ufolep86-data
+  ufolep86-uploads:
+    name: ufolep86-uploads

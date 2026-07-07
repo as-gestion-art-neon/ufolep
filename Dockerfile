@@ -1,8 +1,9 @@
-FROM node:22-bookworm
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --production
-COPY . .
-RUN mkdir -p /app/data && chown -R node:node /app
-USER node
-CMD ["node", "src/app.js"]
+# ── Frontend UFOLEP 86 (Nginx, sert le site statique + proxy API)
+FROM nginx:1.27-alpine
+
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY src/ /usr/share/nginx/html/
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
