@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administration – UFOLEP 86</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Fraunces:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+  <!-- ===================== ÉCRAN DE CONNEXION ===================== -->
+  <div class="login-screen" id="login-screen">
+    <div class="login-card">
+      <img src="../images/logo_ufolep.png" alt="UFOLEP 86" class="login-logo" />
+      <h1>Espace administration</h1>
+      <p class="login-sub">Gestion des actualités &amp; de la galerie photos</p>
+
+      <form id="login-form" class="login-form">
+        <div class="form-field">
+          <label for="username">Identifiant</label>
+          <input type="text" id="username" name="username" autocomplete="username" required />
+        </div>
+        <div class="form-field">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" name="password" autocomplete="current-password" required />
+        </div>
+        <p class="login-error" id="login-error"></p>
+        <button type="submit" class="btn btn-primary btn-full">Se connecter</button>
+      </form>
+
+      <a href="../index.html" class="login-back">← Retour au site</a>
+    </div>
+  </div>
+
+  <!-- ===================== INTERFACE ADMIN ===================== -->
+  <div class="admin-app" id="admin-app" style="display:none;">
+
+    <aside class="admin-sidebar">
+      <div class="admin-brand">
+        <img src="../images/logo_ufolep.png" alt="UFOLEP 86" />
+        <span>Administration</span>
+      </div>
+
+      <nav class="admin-nav">
+        <button class="admin-nav-item active" data-view="actualites">
+          <span class="nav-icon">📰</span> Actualités
+        </button>
+        <button class="admin-nav-item" data-view="galerie">
+          <span class="nav-icon">🖼️</span> Galerie photos
+        </button>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <div class="admin-user">
+          <span class="user-avatar">👤</span>
+          <span id="admin-username">admin</span>
+        </div>
+        <button class="btn-logout" id="logout-btn">Déconnexion</button>
+        <a href="../index.html" class="admin-view-site">↗ Voir le site</a>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+
+      <!-- ---------- VUE ACTUALITÉS ---------- -->
+      <section class="admin-view" id="view-actualites">
+        <div class="admin-view-header">
+          <div>
+            <h2>Actualités</h2>
+            <p>Gérez les actualités affichées dans le bandeau et sur le site.</p>
+          </div>
+          <button class="btn btn-primary" id="btn-new-actu">+ Nouvelle actualité</button>
+        </div>
+
+        <div class="admin-list" id="actu-list">
+          <div class="admin-loading">Chargement…</div>
+        </div>
+      </section>
+
+      <!-- ---------- VUE GALERIE ---------- -->
+      <section class="admin-view" id="view-galerie" style="display:none;">
+        <div class="admin-view-header">
+          <div>
+            <h2>Galerie photos</h2>
+            <p>Uploadez et organisez les photos de la galerie publique.</p>
+          </div>
+          <button class="btn btn-primary" id="btn-upload-photos">+ Ajouter des photos</button>
+          <input type="file" id="photo-upload-input" accept="image/jpeg,image/png,image/webp,image/gif" multiple hidden />
+        </div>
+
+        <div class="admin-upload-zone" id="upload-zone">
+          <span class="upload-icon">📤</span>
+          <strong>Glissez-déposez vos photos ici</strong>
+          <span>ou cliquez sur "Ajouter des photos" — JPG, PNG, WEBP, GIF (8 Mo max par fichier)</span>
+        </div>
+
+        <div class="admin-photo-grid" id="photo-grid">
+          <div class="admin-loading">Chargement…</div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===================== MODALE ACTUALITÉ ===================== -->
+  <div class="modal-overlay" id="actu-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="actu-modal-title">Nouvelle actualité</h3>
+        <button class="modal-close" data-close="actu-modal">✕</button>
+      </div>
+      <form id="actu-form" class="modal-body">
+        <input type="hidden" id="actu-id" />
+
+        <div class="form-field">
+          <label for="actu-titre">Titre *</label>
+          <input type="text" id="actu-titre" required placeholder="Ex : Assemblée Générale Annuelle" />
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-field">
+            <label for="actu-tag">Étiquette</label>
+            <input type="text" id="actu-tag" placeholder="Ex : À venir, Résultats…" value="Info" />
+          </div>
+          <div class="form-field">
+            <label for="actu-date">Date / période affichée</label>
+            <input type="text" id="actu-date" placeholder="Ex : Été 2025" />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="actu-extrait">Extrait court (résumé bandeau)</label>
+          <textarea id="actu-extrait" rows="2" placeholder="Court résumé affiché dans le bandeau et les cartes"></textarea>
+        </div>
+
+        <div class="form-field">
+          <label for="actu-contenu">Contenu complet</label>
+          <textarea id="actu-contenu" rows="4" placeholder="Texte complet de l'actualité"></textarea>
+        </div>
+
+        <div class="form-field">
+          <label for="actu-image">Image (optionnelle)</label>
+          <input type="file" id="actu-image" accept="image/jpeg,image/png,image/webp,image/gif" />
+          <div class="image-preview" id="actu-image-preview"></div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-field">
+            <label for="actu-ordre">Ordre d'affichage</label>
+            <input type="number" id="actu-ordre" value="0" />
+          </div>
+          <div class="form-field form-field-checkbox">
+            <label><input type="checkbox" id="actu-publie" checked /> Publiée (visible sur le site)</label>
+          </div>
+        </div>
+
+        <p class="modal-error" id="actu-form-error"></p>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" data-close="actu-modal">Annuler</button>
+          <button type="submit" class="btn btn-primary" id="actu-submit-btn">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================== MODALE PHOTO (édition métadonnées) ===================== -->
+  <div class="modal-overlay" id="photo-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Modifier la photo</h3>
+        <button class="modal-close" data-close="photo-modal">✕</button>
+      </div>
+      <form id="photo-form" class="modal-body">
+        <input type="hidden" id="photo-id" />
+        <div class="image-preview" id="photo-modal-preview" style="margin-bottom:1rem;"></div>
+
+        <div class="form-field">
+          <label for="photo-titre">Titre</label>
+          <input type="text" id="photo-titre" placeholder="Titre de la photo" />
+        </div>
+        <div class="form-field">
+          <label for="photo-description">Description</label>
+          <textarea id="photo-description" rows="2" placeholder="Description (optionnelle)"></textarea>
+        </div>
+        <div class="form-field">
+          <label for="photo-categorie">Catégorie</label>
+          <input type="text" id="photo-categorie" placeholder="Ex : Compétitions, Esport, Vie associative…" />
+        </div>
+        <div class="form-field form-field-checkbox">
+          <label><input type="checkbox" id="photo-publie" checked /> Publiée (visible dans la galerie)</label>
+        </div>
+
+        <p class="modal-error" id="photo-form-error"></p>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-danger" id="photo-delete-btn">Supprimer</button>
+          <div style="flex:1;"></div>
+          <button type="button" class="btn btn-outline" data-close="photo-modal">Annuler</button>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast notifications -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

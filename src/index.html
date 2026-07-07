@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UFOLEP 86 – Tous les sports, autrement – Vienne</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div id="site-header-placeholder"></div>
+
+  <!-- BANDEAU ACTUALITÉS VERTICAL (sticky, injecté par news-rail.js) -->
+  <div id="news-rail-mount"></div>
+
+  <!-- HERO -->
+  <section class="hero" id="accueil">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <span class="hero-badge">Vienne · Nouvelle-Aquitaine</span>
+      <h1 class="hero-title">
+        Tous les sports,<br />
+        <em>autrement.</em>
+      </h1>
+      <p class="hero-sub">L'UFOLEP 86 vous ouvre les portes d'une pratique sportive accessible, solidaire et conviviale, pour tous les âges et tous les niveaux.</p>
+      <div class="hero-actions">
+        <a href="#activites" class="btn btn-primary">Découvrir nos activités</a>
+        <a href="#contact" class="btn btn-ghost">Adhérer</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-img-wrap">
+        <img src="images/devanture.png" alt="Locaux UFOLEP 86" />
+      </div>
+    </div>
+    <div class="hero-scroll-hint"><span></span></div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section class="section apropos" id="apropos">
+    <div class="container">
+      <div class="section-label">Notre association</div>
+      <div class="apropos-grid">
+        <div class="apropos-text">
+          <h2 class="section-title">Une fédération sportive <em>au service de tous</em></h2>
+          <p>Fondée sur des valeurs laïques et humanistes, l'UFOLEP (Union Française des Œuvres Laïques d'Éducation Physique) accompagne les pratiquants sportifs dans la Vienne depuis de nombreuses années.</p>
+          <p>Notre département, l'UFOLEP 86, fédère des clubs locaux autour d'un projet commun : rendre le sport accessible, éducatif et porteur de lien social.</p>
+          <ul class="apropos-values">
+            <li><span class="val-icon">⚡</span><span>Accessibilité pour tous</span></li>
+            <li><span class="val-icon">🤝</span><span>Solidarité et convivialité</span></li>
+            <li><span class="val-icon">🌱</span><span>Éducation par le sport</span></li>
+            <li><span class="val-icon">🏅</span><span>Compétition et loisir</span></li>
+          </ul>
+        </div>
+        <div class="apropos-stats">
+          <div class="stat-card"><span class="stat-num">86</span><span class="stat-label">Département Vienne</span></div>
+          <div class="stat-card accent"><span class="stat-num">+30</span><span class="stat-label">Disciplines sportives</span></div>
+          <div class="stat-card"><span class="stat-num">🏆</span><span class="stat-label">Compétitions &amp; loisir</span></div>
+          <div class="stat-card accent"><span class="stat-num">LAÏ</span><span class="stat-label">Valeurs laïques</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTIVITÉS -->
+  <section class="section activites" id="activites">
+    <div class="container">
+      <div class="section-label">Ce que nous proposons</div>
+      <h2 class="section-title centered">Nos <em>activités</em></h2>
+      <p class="section-intro">De la compétition au loisir, l'UFOLEP 86 propose une large palette de disciplines pour satisfaire tous les profils.</p>
+
+      <div class="activites-grid">
+        <div class="activite-card"><div class="activite-icon">⚽</div><h3>Football</h3><p>Championnats départementaux et régionaux, pour toutes les catégories d'âge.</p></div>
+        <div class="activite-card"><div class="activite-icon">🚴</div><h3>Cyclisme</h3><p>Randonnées, cyclosport et épreuves chronométrées dans la Vienne.</p></div>
+        <div class="activite-card"><div class="activite-icon">🏊</div><h3>Natation</h3><p>Compétitions locales et pratique loisir pour tous niveaux.</p></div>
+        <div class="activite-card"><div class="activite-icon">🤸</div><h3>Gym &amp; Fitness</h3><p>Gymnastique volontaire, fitness, yoga – sport santé accessible à tous.</p></div>
+        <div class="activite-card"><div class="activite-icon">🎾</div><h3>Tennis de table</h3><p>Tournois conviviaux et championnats par équipes dans tout le département.</p></div>
+        <div class="activite-card"><div class="activite-icon">🏸</div><h3>Sports de raquettes</h3><p>Seedminton, pickleball, peteca, vince pong, badminton… une raquette pour chaque envie !</p></div>
+      </div>
+    </div>
+
+    <!-- CARROUSEL SPORTS INNOVANTS -->
+    <div class="sports-innovants-block">
+      <div class="container">
+        <div class="si-header">
+          <div class="si-badge">Nos sports innovants</div>
+          <h3 class="si-title">Des sports <em>insolites</em> du monde entier !</h3>
+          <p class="si-sub">Sports nouveaux, indoor &amp; outdoor, pour tous les niveaux.</p>
+        </div>
+      </div>
+
+      <div class="carousel-wrapper" aria-label="Sports innovants">
+        <div class="carousel-track track-left">
+          <div class="sport-pill cat-collectif">🎯 Dodgeball <span>Balle aux prisonniers revisitée en 2 équipes</span></div>
+          <div class="sport-pill cat-collectif">🥅 Cardiogoal <span>Du quidditch à la française · 3 cercles</span></div>
+          <div class="sport-pill cat-collectif">🏒 Floorball <span>Hockey sur glace… en baskets !</span></div>
+          <div class="sport-pill cat-collectif">🏈 Flag Football <span>Football américain sans contact</span></div>
+          <div class="sport-pill cat-precision">🏹 Archery Tag <span>Paintball à l'arc, flèches en mousse</span></div>
+          <div class="sport-pill cat-collectif">🥏 Kam Jam <span>Disque volant · viser le but cible</span></div>
+          <div class="sport-pill cat-collectif">🏐 Kinball <span>La plus grosse balle du monde · 3 équipes</span></div>
+          <div class="sport-pill cat-collectif">🎯 Poullball <span>Cibles cubiques à faire tomber</span></div>
+          <div class="sport-pill cat-collectif">🏸 Tchoukball <span>Mix de sports · buts trampolines</span></div>
+          <div class="sport-pill cat-collectif">🪃 Volcage <span>Anneau-frisbee · panier collectif</span></div>
+          <div class="sport-pill cat-collectif">⚡ Spikeball <span>2 vs 2 · rebondir sur trampoline</span></div>
+          <div class="sport-pill cat-collectif">🏟 Voketball <span>Foot + basket + hand en même temps !</span></div>
+          <div class="sport-pill cat-precision">🥏 Disc Golf <span>Frisbee dans un panier, comme au golf</span></div>
+          <div class="sport-pill cat-collectif">🏏 Bouncerball <span>Batte pour marquer dans le but adverse</span></div>
+          <div class="sport-pill cat-collectif">🤾 Scratch Ball <span>Sans contact · vitesse et précision</span></div>
+          <div class="sport-pill cat-collectif">🥍 Cross Canadienne <span>Crosse · sport mixte sans contact</span></div>
+          <div class="sport-pill cat-precision">🥏 Ultimate <span>Frisbee · touchdown collectif</span></div>
+          <div class="sport-pill cat-collectif">⚽ Foobaskill <span>Basket + Foot · ne pas se tromper !</span></div>
+          <div class="sport-pill cat-collectif">🌀 Goubak <span>Collaboration &amp; confrontation · fair-play</span></div>
+          <div class="sport-pill cat-collectif">🎯 Dodgeball <span>Balle aux prisonniers revisitée en 2 équipes</span></div>
+          <div class="sport-pill cat-collectif">🥅 Cardiogoal <span>Du quidditch à la française · 3 cercles</span></div>
+          <div class="sport-pill cat-collectif">🏒 Floorball <span>Hockey sur glace… en baskets !</span></div>
+          <div class="sport-pill cat-collectif">🏈 Flag Football <span>Football américain sans contact</span></div>
+          <div class="sport-pill cat-precision">🏹 Archery Tag <span>Paintball à l'arc, flèches en mousse</span></div>
+          <div class="sport-pill cat-collectif">🥏 Kam Jam <span>Disque volant · viser le but cible</span></div>
+          <div class="sport-pill cat-collectif">🏐 Kinball <span>La plus grosse balle du monde · 3 équipes</span></div>
+          <div class="sport-pill cat-collectif">🎯 Poullball <span>Cibles cubiques à faire tomber</span></div>
+          <div class="sport-pill cat-collectif">🏸 Tchoukball <span>Mix de sports · buts trampolines</span></div>
+          <div class="sport-pill cat-collectif">🪃 Volcage <span>Anneau-frisbee · panier collectif</span></div>
+          <div class="sport-pill cat-collectif">⚡ Spikeball <span>2 vs 2 · rebondir sur trampoline</span></div>
+          <div class="sport-pill cat-collectif">🏟 Voketball <span>Foot + basket + hand en même temps !</span></div>
+          <div class="sport-pill cat-precision">🥏 Disc Golf <span>Frisbee dans un panier, comme au golf</span></div>
+          <div class="sport-pill cat-collectif">🏏 Bouncerball <span>Batte pour marquer dans le but adverse</span></div>
+          <div class="sport-pill cat-collectif">🤾 Scratch Ball <span>Sans contact · vitesse et précision</span></div>
+          <div class="sport-pill cat-collectif">🥍 Cross Canadienne <span>Crosse · sport mixte sans contact</span></div>
+          <div class="sport-pill cat-precision">🥏 Ultimate <span>Frisbee · touchdown collectif</span></div>
+          <div class="sport-pill cat-collectif">⚽ Foobaskill <span>Basket + Foot · ne pas se tromper !</span></div>
+          <div class="sport-pill cat-collectif">🌀 Goubak <span>Collaboration &amp; confrontation · fair-play</span></div>
+        </div>
+      </div>
+
+      <div class="carousel-wrapper" aria-label="UFOGames">
+        <div class="carousel-track track-right">
+          <div class="sport-pill cat-jeu">🏟 Arène Panna <span>1vs1 ou 2vs2 · balle au pied ou crosse</span></div>
+          <div class="sport-pill cat-jeu">🌽 Cornhole <span>Précision · envoyer les sacs dans le trou</span></div>
+          <div class="sport-pill cat-jeu">🧩 Jeux puzzle <span>Coopération en équipe</span></div>
+          <div class="sport-pill cat-jeu">🎯 Tossit <span>Batte · envoyer la balle dans le but adverse</span></div>
+          <div class="sport-pill cat-jeu">🗼 Totem Ultimate <span>Jeu d'équipe mixte · agilité &amp; motricité</span></div>
+          <div class="sport-pill cat-cooperatif">🪢 Tour de coopération <span>Avancer ensemble à l'aide de ficelles</span></div>
+          <div class="sport-pill cat-cooperatif">✏️ Stylo coopératif <span>Dessiner ensemble à l'aide de ficelles</span></div>
+          <div class="sport-pill cat-connecte">⚡ Hecostix <span>Coordination œil-main · vitesse de réaction</span></div>
+          <div class="sport-pill cat-connecte">🎯 Rampshot <span>2 vs 2 · coordination &amp; travail d'équipe</span></div>
+          <div class="sport-pill cat-jeu">🎲 Palato <span>1vs1 ou 2vs2 · palets de précision</span></div>
+          <div class="sport-pill cat-connecte">💡 Kmoove <span>Mur interactif · ballons ou mains</span></div>
+          <div class="sport-pill cat-connecte">🔆 Blazepods <span>Plots lumineux · soyez le plus rapide !</span></div>
+          <div class="sport-pill cat-connecte">🔫 Tir Laser <span>Précision · couplable biathlon run/bike</span></div>
+          <div class="sport-pill cat-connecte">🎮 Esport <span>Mario Kart, Splatoon, Rocket League · club 7–17 ans</span></div>
+          <div class="sport-pill cat-jeu">🏟 Arène Panna <span>1vs1 ou 2vs2 · balle au pied ou crosse</span></div>
+          <div class="sport-pill cat-jeu">🌽 Cornhole <span>Précision · envoyer les sacs dans le trou</span></div>
+          <div class="sport-pill cat-jeu">🧩 Jeux puzzle <span>Coopération en équipe</span></div>
+          <div class="sport-pill cat-jeu">🎯 Tossit <span>Batte · envoyer la balle dans le but adverse</span></div>
+          <div class="sport-pill cat-jeu">🗼 Totem Ultimate <span>Jeu d'équipe mixte · agilité &amp; motricité</span></div>
+          <div class="sport-pill cat-cooperatif">🪢 Tour de coopération <span>Avancer ensemble à l'aide de ficelles</span></div>
+          <div class="sport-pill cat-cooperatif">✏️ Stylo coopératif <span>Dessiner ensemble à l'aide de ficelles</span></div>
+          <div class="sport-pill cat-connecte">⚡ Hecostix <span>Coordination œil-main · vitesse de réaction</span></div>
+          <div class="sport-pill cat-connecte">🎯 Rampshot <span>2 vs 2 · coordination &amp; travail d'équipe</span></div>
+          <div class="sport-pill cat-jeu">🎲 Palato <span>1vs1 ou 2vs2 · palets de précision</span></div>
+          <div class="sport-pill cat-connecte">💡 Kmoove <span>Mur interactif · ballons ou mains</span></div>
+          <div class="sport-pill cat-connecte">🔆 Blazepods <span>Plots lumineux · soyez le plus rapide !</span></div>
+          <div class="sport-pill cat-connecte">🔫 Tir Laser <span>Précision · couplable biathlon run/bike</span></div>
+          <div class="sport-pill cat-connecte">🎮 Esport <span>Mario Kart, Splatoon, Rocket League · club 7–17 ans</span></div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="carousel-legend">
+          <span class="legend-item"><span class="legend-dot collectif"></span>Sports collectifs innovants</span>
+          <span class="legend-item"><span class="legend-dot precision"></span>Sports de précision</span>
+          <span class="legend-item"><span class="legend-dot jeu"></span>UFOGames · Jeux ludiques</span>
+          <span class="legend-item"><span class="legend-dot cooperatif"></span>Jeux coopératifs</span>
+          <span class="legend-item"><span class="legend-dot connecte"></span>Jeux connectés &amp; Esport</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIEUX D'INTERVENTIONS -->
+  <section class="section interventions" id="interventions">
+    <div class="container">
+      <div class="section-label">Territoire &amp; présence</div>
+      <h2 class="section-title">Lieux <em>d'interventions</em></h2>
+      <p class="section-intro">L'UFOLEP 86 intervient sur l'ensemble du département de la Vienne, des grandes villes aux communes rurales.</p>
+
+      <div class="interventions-layout">
+        <div class="map-wrap">
+          <div id="map-vienne"></div>
+          <div class="map-hint">🖱️ Cliquez sur un marqueur pour plus d'informations</div>
+        </div>
+
+        <div class="interventions-panel">
+          <div class="inter-highlight">
+            <div class="inter-dot red"></div>
+            <div>
+              <strong>Chatellerault</strong>
+              <ul><li>Les Renardières</li><li>Lac</li><li>Ozon</li><li>Chateauneuf</li></ul>
+            </div>
+          </div>
+
+          <div class="inter-highlight">
+            <div class="inter-dot red"></div>
+            <div>
+              <strong>Poitiers</strong>
+              <ul><li>Beaulieu</li><li>Couronneries</li><li>St Eloi</li><li>3 Cités</li><li>Centre-Ville</li></ul>
+            </div>
+          </div>
+
+          <div class="inter-other">
+            <h4>Autres communes</h4>
+            <div class="inter-tags">
+              <span>Loudun</span><span>Les Ormes</span><span>Lencloître</span>
+              <span>Mirebeau</span><span>Neuville</span><span>Vouillé</span>
+              <span>Migné-Auxances</span><span>Vouneuil-sous-Biard</span>
+              <span>Buxerolles</span><span>St Benoît</span><span>Iteuil</span>
+              <span>Marcay</span><span>Lusignan</span><span>Vivonne</span>
+              <span>La Villedieu-du-Clain</span><span>Gencay</span>
+              <span>Verrières</span><span>Civaux</span><span>Lussac</span>
+              <span>L'Isle Jourdain</span><span>Civray</span>
+            </div>
+          </div>
+
+          <a href="#contact" class="btn btn-primary" style="margin-top:1rem;">Nous contacter</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIE PHOTOS -->
+  <section class="section galerie" id="galerie">
+    <div class="container">
+      <div class="section-label">En images</div>
+      <h2 class="section-title centered">Notre <em>galerie</em></h2>
+      <p class="section-intro">Retrouvez les moments forts de la vie de l'association : événements, compétitions, animations…</p>
+
+      <div class="galerie-filters" id="galerie-filters"></div>
+      <div class="galerie-grid" id="galerie-grid">
+        <div class="galerie-empty">Chargement de la galerie…</div>
+      </div>
+    </div>
+  </section>
+  <div id="lightbox-mount"></div>
+
+  <!-- ACTUALITÉS (résumé pleine page, alimenté par la même API) -->
+  <section class="section actualites" id="actualites">
+    <div class="container">
+      <div class="section-label">Restez informés</div>
+      <h2 class="section-title">Actualités <em>&amp; événements</em></h2>
+      <div class="actu-grid" id="actu-grid-dynamic">
+        <div class="actu-empty">Chargement des actualités…</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="section-label">Nous rejoindre</div>
+          <h2 class="section-title">Adhérer à<br /><em>l'UFOLEP 86</em></h2>
+          <p>Vous souhaitez rejoindre un club affilié, créer une section ou simplement en savoir plus ? Contactez-nous !</p>
+          <ul class="contact-details">
+            <li><span class="contact-icon">📍</span><div><strong>Adresse</strong><span>Poitiers, Vienne (86)</span></div></li>
+            <li><span class="contact-icon">📞</span><div><strong>Téléphone</strong><span>Nous contacter pour les coordonnées</span></div></li>
+            <li><span class="contact-icon">✉️</span><div><strong>Email</strong><span>contact@ufolep86.fr</span></div></li>
+          </ul>
+        </div>
+        <div class="contact-form-wrap">
+          <form class="contact-form" id="contact-form">
+            <div class="form-row">
+              <div class="form-field"><label for="nom">Nom *</label><input type="text" id="nom" name="nom" placeholder="Votre nom" required /></div>
+              <div class="form-field"><label for="prenom">Prénom *</label><input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required /></div>
+            </div>
+            <div class="form-field"><label for="email">Email *</label><input type="email" id="email" name="email" placeholder="votre@email.fr" required /></div>
+            <div class="form-field">
+              <label for="sujet">Sujet</label>
+              <select id="sujet" name="sujet">
+                <option value="">Choisir un sujet…</option>
+                <option value="adhesion">Adhésion / inscription</option>
+                <option value="club">Créer un club affilié</option>
+                <option value="info">Renseignements</option>
+                <option value="autre">Autre</option>
+              </select>
+            </div>
+            <div class="form-field"><label for="message">Message *</label><textarea id="message" name="message" rows="4" placeholder="Votre message…" required></textarea></div>
+            <button type="submit" class="btn btn-primary btn-full">Envoyer le message</button>
+            <p class="form-notice" id="form-notice"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer-placeholder"></div>
+
+  <script src="js/config.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/news-rail.js"></script>
+  <script src="js/galerie.js"></script>
+</body>
+</html>
