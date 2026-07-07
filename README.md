@@ -97,6 +97,26 @@ git push -u origin main
 - **Site public** : `http://<ip-serveur>:9430`
 - **Administration** : `http://<ip-serveur>:9430/admin/`
 
+### ⚠️ Mise à jour de la stack : forcer le rebuild des images
+
+Le bouton **"Update the stack"** de Portainer **ne reconstruit pas** les images si
+elles existent déjà sous le même tag — il réutilise le cache, et vos modifications
+(HTML, config Nginx, code API…) ne sont pas prises en compte.
+
+**Deux méthodes fiables :**
+
+**Méthode A (recommandée) — versionner les tags :** à chaque modification, incrémentez
+le tag d'image dans `docker-compose.yml` (`ufolep86-web:v2` → `v3`, etc.) avant de
+pousser sur GitHub. Docker est alors obligé de reconstruire puisque le tag n'existe pas.
+
+**Méthode B — purger manuellement :** dans Portainer :
+1. **Stacks** → votre stack → **Stop** puis **Delete** (⚠️ les volumes `ufolep86-data`
+   et `ufolep86-uploads` ne sont PAS supprimés, vos données sont conservées)
+2. **Images** → supprimer `ufolep86-web` et `ufolep86-api`
+3. Recréer la stack depuis le repository
+
+En ligne de commande sur le serveur : `docker compose build --no-cache && docker compose up -d`
+
 ---
 
 ## 🔐 Espace d'administration

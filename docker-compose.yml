@@ -16,7 +16,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ufolep86-web:latest
+    # ⚠️ Incrémentez ce tag à chaque modification du frontend ou de la config nginx
+    # pour forcer Portainer/Docker à reconstruire l'image (sinon l'ancienne image
+    # en cache est réutilisée par "Update the stack").
+    image: ufolep86-web:v2
     container_name: ufolep86-web
     restart: unless-stopped
 
@@ -43,7 +46,8 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile
-    image: ufolep86-api:latest
+    # ⚠️ Incrémentez ce tag à chaque modification du code de l'API (même raison).
+    image: ufolep86-api:v2
     container_name: ufolep86-api
     restart: unless-stopped
 
